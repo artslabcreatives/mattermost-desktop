@@ -175,9 +175,12 @@ jobs:
           MAC_PROFILE: ${{ secrets.MM_DESKTOP_MAC_INSTALLER_DMG_PROFILE }}
         run: |
           [ -n "$MAC_PROFILE" ] && echo $MAC_PROFILE | base64 -D > ./mac.provisionprofile || true
-          zsh -c 'echo -n $APPLE_API_KEY_RAW > ./key.p8'
+          [ -n "$APPLE_API_KEY_RAW" ] && zsh -c 'echo -n $APPLE_API_KEY_RAW > ./key.p8' || true
           [ -z "$CSC_LINK" ] && unset CSC_LINK || true
           [ -z "$CSC_KEY_PASSWORD" ] && unset CSC_KEY_PASSWORD || true
+          [ -z "$APPLE_API_KEY_ID" ] && unset APPLE_API_KEY_ID || true
+          [ -z "$APPLE_API_ISSUER" ] && unset APPLE_API_ISSUER || true
+          [ ! -f "./key.p8" ] && unset APPLE_API_KEY || true
           mkdir -p ./build/macos-release
           npm run package:mac-with-universal
           bash -x ./scripts/cp_artifacts.sh release ./build/macos-release
