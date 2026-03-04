@@ -99,7 +99,7 @@ jobs:
           CSC_LINK: ${{ secrets.MM_DESKTOP_MAC_INSTALLER_CSC_LINK }}
           MAC_PROFILE: ${{ secrets.MM_DESKTOP_MAC_INSTALLER_DMG_PROFILE }}
         run: |
-          echo $MAC_PROFILE | base64 -D > ./mac.provisionprofile
+          [ -n "$MAC_PROFILE" ] && echo $MAC_PROFILE | base64 -D > ./mac.provisionprofile || true
           zsh -c 'echo -n $APPLE_API_KEY_RAW > ./key.p8'
           [ -z "$CSC_LINK" ] && unset CSC_LINK || true
           [ -z "$CSC_KEY_PASSWORD" ] && unset CSC_KEY_PASSWORD || true
