@@ -8,7 +8,7 @@ git for-each-ref --sort=creatordate --format '%(refname)' refs/tags | grep "v[0-
 LAST_VERSION="$(cat $TEMP_VERSION_FILE | tail -1)"
 
 TEMP_CHANGES_FILE="$(mktemp -t temp_changes_file.XXXX)"
-git cherry -v v$LAST_VERSION v$VERSION | grep ^+ | grep "(#[0-9]\+)" > $TEMP_CHANGES_FILE
+git cherry -v v$LAST_VERSION v$VERSION | grep ^+ | grep "(#[0-9]\+)" > $TEMP_CHANGES_FILE || true
 
 cat <<-MD
 ### [v$VERSION](https://github.com/mattermost/desktop/releases/tag/v$VERSION) :tada:

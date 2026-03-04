@@ -239,7 +239,7 @@ jobs:
         id: calc
         run: |
           echo "BODY<<EOF" >> "${GITHUB_OUTPUT}"
-          bash -x scripts/generate_release_post.sh $(jq -r .version package.json) >> "${GITHUB_OUTPUT}"
+          bash -x scripts/generate_release_post.sh $(jq -r .version package.json) >> "${GITHUB_OUTPUT}" || true
           echo "EOF" >> "${GITHUB_OUTPUT}"
 
       - name: release/notify-channel
