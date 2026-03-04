@@ -193,6 +193,8 @@ jobs:
 
   github-release:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     needs:
       - build-mac-installer
       - build-msi-installer
@@ -215,7 +217,7 @@ jobs:
 
       - name: release/publish-release
         env:
-          GITHUB_TOKEN: ${{ secrets.MATTERMOST_BUILD_GH_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           VERSION=$(jq -r .version package.json)
           ./scripts/generate_release_markdown.sh ${VERSION} > release-notes.md
